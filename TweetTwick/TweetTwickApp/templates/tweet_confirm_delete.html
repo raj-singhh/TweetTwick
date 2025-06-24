@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}
+TweetTwick
+{% endblock %}
+
+{% block content %}
+
+<h1>Are you sure You want to delete</h1>
+    
+    <form method="POST" >
+        {% csrf_token %}
+
+        <button>Delete</button>
+        <a href="{%url 'tweet_list'%}">Cancel</a>
+    </form>
+    
+
+{% endblock %}

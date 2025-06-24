@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block title %} TweetTwick {% endblock %}
+
+{% block content %}
+<div class="min-h-screen">
+  <h1 class="text-3xl text-center mt-6 mb-6 font-bold">
+    Welcome to TweetTwick
+  </h1>
+
+  <div class="text-center mb-6">
+    <a
+      href="{% url 'tweet_create' %}"
+      class="bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-4 rounded-lg transition duration-300"
+    >
+      Create a Tweet
+    </a>
+  </div>
+
+  <!-- Main content container -->
+  <div class="container mx-auto px-2 sm:px-4">
+    <!-- Responsive grid of tweets -->
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
+      {% for tweet in tweets %}
+      <div
+        class="bg-white dark:bg-gray-800 shadow-md rounded-xl overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300"
+      >
+        <!-- Top Image -->
+        <div
+          class="h-40 overflow-hidden flex items-center justify-center bg-gray-100 dark:bg-gray-700"
+        >
+          <img
+            src="{{ tweet.photo.url }}"
+            alt="Tweet Image"
+            class="w-full h-full object-contain"
+          />
+        </div>
+
+        <!-- Content -->
+        <div class="p-3 flex flex-col justify-between flex-1">
+          <div>
+            <h2
+              class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate"
+            >
+              {{ tweet.user.username }}
+            </h2>
+            <p
+              class="text-xs text-gray-700 dark:text-gray-300 mt-1 line-clamp-3"
+            >
+              {{ tweet.text }}
+            </p>
+            <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-1">
+              {{ tweet.created_at }}
+            </p>
+          </div>
+
+          <!-- Buttons -->
+          <div class="mt-3 flex justify-end gap-2">
+            <a
+              href="{% url 'tweet_edit' tweet.id %}"
+              class="px-2.5 py-1 text-[11px] bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition"
+            >
+              Edit
+            </a>
+            <a
+              href="{% url 'tweet_delete' tweet.id %}"
+              class="px-2.5 py-1 text-[11px] bg-red-500 hover:bg-red-600 text-white rounded-lg transition"
+            >
+              Delete
+            </a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-span-full text-center py-10">
+        <p class="text-gray-500 dark:text-gray-400">
+          No tweets found. Create your first tweet!
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
